@@ -1,7 +1,0 @@
-AI-Iris-Flower-Classification/
-│
-├── README.md
-├── iris_knn.py
-├── requirements.txt
-├── output.png
-└── LICENSE
