@@ -1,0 +1,6 @@
+AI_Project_2/
+│
+├── iris_knn.py
+├── README.md
+├── requirements.txt
+└── output.png
