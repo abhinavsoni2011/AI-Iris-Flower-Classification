@@ -1,17 +1,20 @@
 """
-==============================================
-Artificial Intelligence Project 2
-Title : Iris Flower Classification Using KNN
-Author : Abhinav Soni
-Internship : DecodeLabs AI Internship
-==============================================
+============================================================
+Project 2 : Iris Flower Classification using K-Nearest Neighbors (KNN)
+
+Author      : Abhinav Soni
+Internship  : DecodeLabs AI Internship 2026
+
+Description:
+This project classifies Iris flower species using the
+K-Nearest Neighbors (KNN) Machine Learning algorithm.
+============================================================
 """
 
-# -------------------------------
+# ---------------------------------------------------------
 # Import Libraries
-# -------------------------------
+# ---------------------------------------------------------
 
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -28,158 +31,171 @@ from sklearn.metrics import (
     f1_score
 )
 
-# -------------------------------
-# Load Dataset
-# -------------------------------
 
-iris = load_iris()
+def main():
 
-X = iris.data
-y = iris.target
+    # ---------------------------------------------------------
+    # Load Iris Dataset
+    # ---------------------------------------------------------
 
-feature_names = iris.feature_names
-class_names = iris.target_names
+    iris = load_iris()
 
-print("="*60)
-print("IRIS DATASET INFORMATION")
-print("="*60)
+    X = iris.data
+    y = iris.target
 
-print("\nFeatures:")
-print(feature_names)
+    feature_names = iris.feature_names
+    class_names = iris.target_names
 
-print("\nClasses:")
-print(class_names)
+    print("=" * 60)
+    print("IRIS FLOWER CLASSIFICATION USING KNN")
+    print("=" * 60)
 
-print("\nTotal Samples:", len(X))
+    print("\nDataset Information")
+    print("-" * 60)
 
-# -------------------------------
-# Convert to DataFrame
-# -------------------------------
+    print(f"Total Samples : {len(X)}")
+    print(f"Features      : {len(feature_names)}")
+    print(f"Classes       : {len(class_names)}")
 
-df = pd.DataFrame(X, columns=feature_names)
-df["Species"] = y
+    # ---------------------------------------------------------
+    # Create DataFrame
+    # ---------------------------------------------------------
 
-print("\nFirst Five Records\n")
-print(df.head())
+    df = pd.DataFrame(X, columns=feature_names)
+    df["Species"] = y
 
-# -------------------------------
-# Feature Scaling
-# -------------------------------
+    print("\nFirst Five Records\n")
+    print(df.head())
 
-scaler = StandardScaler()
+    # ---------------------------------------------------------
+    # Feature Scaling
+    # ---------------------------------------------------------
 
-X_scaled = scaler.fit_transform(X)
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
 
-# -------------------------------
-# Train Test Split
-# -------------------------------
+    # ---------------------------------------------------------
+    # Split Dataset
+    # ---------------------------------------------------------
 
-X_train, X_test, y_train, y_test = train_test_split(
+    X_train, X_test, y_train, y_test = train_test_split(
+        X_scaled,
+        y,
+        test_size=0.20,
+        random_state=42,
+        shuffle=True
+    )
 
-    X_scaled,
-    y,
-    test_size=0.20,
-    random_state=42,
-    shuffle=True
+    # ---------------------------------------------------------
+    # Train KNN Model
+    # ---------------------------------------------------------
 
-)
+    model = KNeighborsClassifier(n_neighbors=5)
+    model.fit(X_train, y_train)
 
-# -------------------------------
-# Build KNN Model
-# -------------------------------
+    # ---------------------------------------------------------
+    # Prediction
+    # ---------------------------------------------------------
 
-model = KNeighborsClassifier(n_neighbors=5)
+    y_pred = model.predict(X_test)
 
-model.fit(X_train, y_train)
+    # ---------------------------------------------------------
+    # Accuracy
+    # ---------------------------------------------------------
 
-# -------------------------------
-# Prediction
-# -------------------------------
+    accuracy = accuracy_score(y_test, y_pred)
 
-y_pred = model.predict(X_test)
+    print("\n" + "=" * 60)
+    print("MODEL PERFORMANCE")
+    print("=" * 60)
 
-# -------------------------------
-# Accuracy
-# -------------------------------
+    print(f"Accuracy : {accuracy * 100:.2f}%")
 
-accuracy = accuracy_score(y_test, y_pred)
+    # ---------------------------------------------------------
+    # F1 Score
+    # ---------------------------------------------------------
 
-print("\nAccuracy : {:.2f}%".format(accuracy*100))
+    f1 = f1_score(
+        y_test,
+        y_pred,
+        average="weighted"
+    )
 
-# -------------------------------
-# F1 Score
-# -------------------------------
+    print(f"F1 Score : {f1:.4f}")
 
-f1 = f1_score(
-    y_test,
-    y_pred,
-    average="weighted"
-)
+    # ---------------------------------------------------------
+    # Classification Report
+    # ---------------------------------------------------------
 
-print("F1 Score :", round(f1,4))
+    print("\nClassification Report\n")
 
-# -------------------------------
-# Classification Report
-# -------------------------------
+    print(
+        classification_report(
+            y_test,
+            y_pred,
+            target_names=class_names
+        )
+    )
 
-print("\nClassification Report\n")
+    # ---------------------------------------------------------
+    # Confusion Matrix
+    # ---------------------------------------------------------
 
-print(classification_report(
-    y_test,
-    y_pred,
-    target_names=class_names
-))
+    cm = confusion_matrix(y_test, y_pred)
 
-# -------------------------------
-# Confusion Matrix
-# -------------------------------
+    print("Confusion Matrix\n")
+    print(cm)
 
-cm = confusion_matrix(y_test, y_pred)
+    # ---------------------------------------------------------
+    # Plot Confusion Matrix
+    # ---------------------------------------------------------
 
-print("\nConfusion Matrix\n")
-print(cm)
+    plt.figure(figsize=(6, 5))
 
-# -------------------------------
-# Plot Confusion Matrix
-# -------------------------------
+    sns.heatmap(
+        cm,
+        annot=True,
+        cmap="Blues",
+        fmt="d",
+        xticklabels=class_names,
+        yticklabels=class_names
+    )
 
-plt.figure(figsize=(6,5))
+    plt.title("Confusion Matrix")
 
-sns.heatmap(
+    plt.xlabel("Predicted Label")
+    plt.ylabel("Actual Label")
 
-    cm,
-    annot=True,
-    cmap="Blues",
-    fmt="d",
-    xticklabels=class_names,
-    yticklabels=class_names
+    plt.tight_layout()
 
-)
+    plt.savefig("output.png")
 
-plt.title("Confusion Matrix")
+    plt.show()
 
-plt.xlabel("Predicted")
+    # ---------------------------------------------------------
+    # Test with New Sample
+    # ---------------------------------------------------------
 
-plt.ylabel("Actual")
+    sample = [[5.1, 3.5, 1.4, 0.2]]
 
-plt.tight_layout()
+    sample = scaler.transform(sample)
 
-plt.savefig("output.png")
+    prediction = model.predict(sample)
 
-plt.show()
+    print("\n" + "=" * 60)
+    print("NEW SAMPLE PREDICTION")
+    print("=" * 60)
 
-# -------------------------------
-# Predict New Flower
-# -------------------------------
+    print(f"Predicted Species : {class_names[prediction[0]]}")
 
-sample = [[5.1,3.5,1.4,0.2]]
+    # ---------------------------------------------------------
+    # End
+    # ---------------------------------------------------------
 
-sample = scaler.transform(sample)
+    print("\n" + "=" * 60)
+    print("Project Completed Successfully!")
+    print("=" * 60)
 
-prediction = model.predict(sample)
 
-print("\nPrediction For New Flower :")
-
-print(class_names[prediction[0]])
-
-print("\nProject Completed Successfully.")
+if __name__ == "__main__":
+    main()
