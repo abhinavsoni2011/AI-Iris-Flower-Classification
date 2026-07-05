@@ -1,60 +1,90 @@
-# AI Project 2
+# 🌸 Iris Flower Classification using K-Nearest Neighbors (KNN)
 
-## Iris Flower Classification using K-Nearest Neighbors
-
-### Objective
-
-Build a supervised machine learning model capable of classifying Iris flower species.
+A Machine Learning project that classifies Iris flowers into different species using the K-Nearest Neighbors (KNN) algorithm.
 
 ---
 
-## Technologies
+## 📌 Features
 
-- Python
-- NumPy
-- Pandas
-- Matplotlib
-- Seaborn
-- Scikit-learn
-
----
-
-## Machine Learning Pipeline
-
-1. Load Dataset
-2. Data Inspection
-3. Feature Scaling
-4. Train Test Split
-5. KNN Classification
-6. Prediction
-7. Accuracy Evaluation
-8. Confusion Matrix
-9. F1 Score
-10. Classification Report
-
----
-
-## Results
-
-- Accuracy ≈ 100%
-- F1 Score ≈ 1.00
-
----
-
-## Skills Learned
-
-- Data Preprocessing
+- Iris dataset classification
+- Data preprocessing
 - Feature Scaling
-- Supervised Learning
-- KNN Algorithm
-- Model Evaluation
+- KNN model training
+- Model evaluation
 - Confusion Matrix
+- Accuracy Score
 - F1 Score
 
 ---
 
-## Internship
+## 🛠 Technologies Used
 
-DecodeLabs AI Internship
+- Python
+- Pandas
+- NumPy
+- Matplotlib
+- Scikit-learn
 
-Project 2
+---
+
+## 📂 Project Structure
+
+```
+Project_2_Iris_Classification/
+│
+├── iris_knn.py
+├── README.md
+├── requirements.txt
+├── output.png
+└── LICENSE
+```
+
+---
+
+## ▶️ How to Run
+
+```bash
+pip install -r requirements.txt
+python iris_knn.py
+```
+
+---
+
+## 📊 Model Used
+
+- K-Nearest Neighbors (KNN)
+
+---
+
+## 📈 Evaluation Metrics
+
+- Accuracy
+- Precision
+- Recall
+- F1 Score
+- Confusion Matrix
+
+---
+
+## 🚀 Future Improvements
+
+- Hyperparameter Tuning
+- GUI Interface
+- Web Deployment
+- More ML Algorithms
+
+---
+
+## 👨‍💻 Author
+
+**Abhinav Soni**
+
+B.Tech Computer Science & Engineering
+
+Global Institute of Technology, Jaipur (RTU)
+
+---
+
+## 📜 License
+
+MIT License
